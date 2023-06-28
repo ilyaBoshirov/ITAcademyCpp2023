@@ -6,6 +6,14 @@ struct Parameters {
 	bool isCompressed;
 };
 
+void printHelpMessage() {
+	std::cout << "This program created for masking images in text format." << std::endl;
+	std::cout << "Flags:" << std::endl;
+	std::cout << "-i\t[image_file] Image file name" << std::endl;
+	std::cout << "-m\t[mask_file] Mask file name" << std::endl;
+	std::cout << "-c\t\t Use compressed mask (in decemical format)" << std::endl;
+}
+
 Parameters parseArgs(int argc, char** argv) {
 	Parameters params;
 	params.imageFile = "";
@@ -29,6 +37,11 @@ Parameters parseArgs(int argc, char** argv) {
 		if (paramValue == "-c") {
 			params.isCompressed = true;
 			continue;
+		}
+
+		if (paramValue == "-h") {
+			printHelpMessage();
+			exit(0);
 		}
 	}
 
@@ -71,14 +84,6 @@ std::pair<size_t, size_t> prepareData(Parameters& args) {
 		exit(2);
 	}
 	return imageFileSize;
-}
-
-void printHelpMessage() {
-	std::cout << "This program created for masking images in text format." << std::endl;
-	std::cout << "Flags:" << std::endl;
-	std::cout << "-i\t[image_file] Image file name" << std::endl;
-	std::cout << "-m\t[mask_file] Mask file name" << std::endl;
-	std::cout << "-c\t\t Use compressed mask (in decemical format)" << std::endl;
 }
 
 int main(int argc, char** argv) {
