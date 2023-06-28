@@ -74,7 +74,11 @@ std::pair<size_t, size_t> prepareData(Parameters& args) {
 }
 
 void printHelpMessage() {
-	// todo
+	std::cout << "This program created for masking images in text format." << std::endl;
+	std::cout << "Flags:" << std::endl;
+	std::cout << "-i\t[image_file] Image file name" << std::endl;
+	std::cout << "-m\t[mask_file] Mask file name" << std::endl;
+	std::cout << "-c\t\t Use compressed mask (in decemical format)" << std::endl;
 }
 
 int main(int argc, char** argv) {
