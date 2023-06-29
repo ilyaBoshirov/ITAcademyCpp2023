@@ -15,8 +15,6 @@ std::pair<size_t, size_t> getFileSize(std::string fileName);
 
 bool checkFile(std::string);
 
-bool checkFileSizes(std::string imageFile, std::string maskFile, bool isCompressed);
-
 void generateImageFile(std::string fileName, uint32_t width, uint32_t height);
 
 void generateMaskFile(std::string fileName, uint32_t width, uint32_t height, bool isCompressed);
