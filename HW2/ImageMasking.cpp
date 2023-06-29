@@ -136,7 +136,7 @@ void generateImageFile(std::string fileName, uint32_t width, uint32_t height) {
 
 	for (auto i = 0; i < width; ++i) {
 		for (auto j = 0; j < height; ++j) {
-			fout << rand() % 10;
+			fout << rand() % 9 + 1;
 
 			if (j < (IMAGE_SIZE - 1)) {
 				fout << ' ';
