@@ -207,7 +207,7 @@ RACEINFO loadResults() {
 	while (!fin.eof()) {
 		std::getline(fin, fileStr);
 
-		if (fileStr.find(fileSeparator) != -1 || fileStr.length() == 0) {
+		if (fileStr.find(fileSeparator) != -1 || fileStr.length() == 0 ) {
 			continue;
 		}
 		raceHistory.push_back(splitLine(fileStr));
