@@ -64,5 +64,4 @@ void menu(std::string programmName) {
 int main(int argc, char* argv[]) {
     std::string programmName{ argv[0] };
     menu(programmName);
-    return 0;
 }
