@@ -13,6 +13,12 @@ void printHelpMessage(std::string programmName) {
 
 void printLastResult(RACEINFO history) {
 	int numberOfRaces = (history.size() - (history.size() % lapsNumber)) / lapsNumber;
+
+	if (numberOfRaces == 0) {
+		std::cout << "No results" << std::endl;
+		return;
+	}
+
 	std::cout << "Race #" << numberOfRaces << " result" << std::endl;
 	for (auto j = 0; j < lapsNumber; ++j) {
 		std::cout << "Lap " << j + 1 << "; Time: " << history[lapsNumber * (numberOfRaces - 1) + j].first;
@@ -26,12 +32,18 @@ void printLastResult(RACEINFO history) {
 
 void printAllResults(RACEINFO history) {
 	int numberOfRaces = (history.size() - (history.size() % lapsNumber)) / lapsNumber;
+
+	if (numberOfRaces == 0) {
+		std::cout << "No results" << std::endl;
+		return;
+	}
+
 	for (auto i = 0; i < numberOfRaces; ++i) {
 		std::cout << "Race #" << i + 1 << " result" << std::endl;
 		for (auto j = 0; j < lapsNumber; ++j) {
 			std::cout << "Lap " << j + 1 << "; Time: " << history[lapsNumber * i + j].first;
 			if (history[lapsNumber * i + j].second.length() > 0) {
-				std::cout << " ; Comment: " << history[lapsNumber * i + j].second;
+				std::cout << "; Comment:" << history[lapsNumber * i + j].second;
 			}
 			std::cout << ";" << std::endl;
 		}
@@ -166,6 +178,7 @@ void saveResults(RACEINFO raceResult) {
 	for (auto lapInfo : raceResult) {
 		fout << std::endl << lapInfo.first << "\t" << lapInfo.second;
 	}
+	fout << std::endl;
 
 	fout.close();
 }
@@ -179,6 +192,13 @@ RACEINFO loadResults() {
 	std::ifstream fin(storageFile);
 	if (!fin) {
 		std::cout << "Error when open file" << std::endl;
+		fin.close();
+
+		// create file
+		std::cout << "Create new storage file" << std::endl;
+		std::ofstream fout(storageFile, std::ios::app);
+		fout.close();
+
 		return RACEINFO{};
 	}
 
@@ -187,7 +207,7 @@ RACEINFO loadResults() {
 	while (!fin.eof()) {
 		std::getline(fin, fileStr);
 
-		if (fileStr.find(fileSeparator) != -1) {
+		if (fileStr.find(fileSeparator) != -1 || fileStr.length() == 0) {
 			continue;
 		}
 		raceHistory.push_back(splitLine(fileStr));

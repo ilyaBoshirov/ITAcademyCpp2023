@@ -10,7 +10,6 @@
 typedef std::pair<std::string, std::string> LAPINFO;
 typedef std::vector<LAPINFO> RACEINFO;
 
-
 constexpr auto storageFile = "data.txt";
 constexpr auto fileSeparator = "********************";
 constexpr auto lapsNumber = 5;
@@ -18,8 +17,6 @@ constexpr auto lapsNumber = 5;
 void printHelpMessage(std::string programmName);
 
 void printMenu();
-
-void addComment();
 
 RACEINFO startNewRace();
 
