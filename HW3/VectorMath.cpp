@@ -58,7 +58,7 @@ int VectorMath::getOddElementsProduct(std::vector<int> vec) {
 	auto vecSize = vec.size();
 	auto resultProduct = 1;
 	for (auto i = 1; i < vecSize; i += 2) {
-		resultProduct *= vec[i];
+		resultProduct *= vec.at(i);
 	}
 
 	return resultProduct;
