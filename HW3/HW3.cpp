@@ -10,8 +10,8 @@ bool indexIsCorrect(int i, size_t size) {
 	return true;
 }
 
-void printVector(std::vector<int> vec) {
-	for (auto element : vec) {
+void printVector(std::vector<int> *vec) {
+	for (auto element : *vec) {
 		std::cout << element << " ";
 	}
 	std::cout << std::endl;
@@ -22,27 +22,27 @@ void showVectorOperations() {
 	std::cout << "Enter vector size: ";
 	std::cin >> vectorSize;
 
-	std::vector<int> vec;
+	auto vec = std::make_unique<std::vector<int>>();
 	std::cout << "Enter vector elements: " << std::endl;
 	
 	int element;
 	for (auto i = 0; i < vectorSize; ++i) {
 		std::cin >> element;
-		vec.push_back(element);
+		vec->push_back(element);
 	}
 
 	std::cout << "VECTOR ELEMENTS" << std::endl;
-	printVector(vec);
+	printVector(vec.get());
 
 	std::cout << std::endl << "#1. GET MINIMAL EVEN (ODD) ELEMENT" << std::endl;
-	VectorMath::minEvenElement(vec);
+	VectorMath::minEvenElement(vec.get());
 
 	std::cout << std::endl << "#2. SUM OF NUMBERS OF MINIMUM AND MAXIMUM ELEMENTS" << std::endl;
-	auto sum = VectorMath::getMinAndMaxSumNuber(vec);
+	auto sum = VectorMath::getMinAndMaxSumNuber(vec.get());
 	std::cout << "Sum: " << sum << std::endl;
 
 	std::cout << std::endl << "#3. PRODUCT OF ELEMENTS WITH ODD INDEXES" << std::endl;
-	auto product = VectorMath::getOddElementsProduct(vec);
+	auto product = VectorMath::getOddElementsProduct(vec.get());
 	std::cout << "Product: " << product << std::endl;
 
 	std::cout << std::endl << "#4. SWAP 2 ELEMENTS" << std::endl;
@@ -64,17 +64,17 @@ void showVectorOperations() {
 		return;
 	}
 
-	VectorMath::simpleSwap(vec, i, j);
+	VectorMath::simpleSwap(vec.get(), i, j);
 	std::cout << "#4.1. classic swap:" << std::endl;
-	printVector(vec);
+	printVector(vec.get());
 
-	VectorMath::smartSwap(vec, i, j);
+	VectorMath::smartSwap(vec.get(), i, j);
 	std::cout << "#4.2. smart (xor) swap:" << std::endl;
-	printVector(vec);
+	printVector(vec.get());
 
-	VectorMath::stdSwap(vec, i, j);
+	VectorMath::stdSwap(vec.get(), i, j);
 	std::cout << "#4.3. std swap:" << std::endl;
-	printVector(vec);
+	printVector(vec.get());
 }
 
 void printArray(int* arr, size_t arraySize) {
