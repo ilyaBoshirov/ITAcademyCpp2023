@@ -31,3 +31,15 @@ void Sword::update() {
 		std::cout << "You have sword of maximum level! (damage of your sword: " << this->damage << ")" << std::endl;
 	}
 }
+
+Sword& Sword::operator= (const Sword& sword) {
+	if (this == &sword) {
+		return *this;
+	}
+		
+	this->level = sword.level;
+	this->damage = sword.damage;
+	this->maxLevel = sword.maxLevel;
+
+	return *this;
+}
