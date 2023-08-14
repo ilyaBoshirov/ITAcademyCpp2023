@@ -1,29 +1,23 @@
 #include "Creature.h"
 
 Creature::Creature() {
-	this->health = 100;
+	this->initHealth = 100;
+	this->currentHealth = this->initHealth;
 	this->strength = 5;
 }
 
 Creature::Creature(int health, int strength) {
-	this->health = health;
+	this->initHealth = health;
+	this->currentHealth = this->initHealth;
 	this->strength = strength;
 }
 
 int Creature::getHealth() {
-	return this->health;
-}
-
-void Creature::setHealth(int health) {
-	this->health = health;
+	return this->currentHealth;
 }
 
 int Creature::getStrength() {
 	return this->strength;
-}
-
-void Creature::setStrength(int strength) {
-	this->strength = strength;
 }
 
 int Creature::makeDamage() {
@@ -31,5 +25,5 @@ int Creature::makeDamage() {
 }
 
 void Creature::getDamage(int damage) {
-	this->health = damage < this->health ? this->health - damage : 0;
+	this->currentHealth = damage < this->currentHealth ? this->currentHealth - damage : 0;
 }

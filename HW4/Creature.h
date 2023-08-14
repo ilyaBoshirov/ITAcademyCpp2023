@@ -1,6 +1,9 @@
 #pragma once
 class Creature {
-	int health;
+
+protected:
+	int initHealth;
+	int currentHealth;
 	int strength;
 
 public:
