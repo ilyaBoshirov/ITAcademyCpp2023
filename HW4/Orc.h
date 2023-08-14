@@ -9,5 +9,8 @@ public:
 
 	Orc();
 	Orc(std::string name);
+	Orc(int health, int strength, std::string name);
+
+	Orc& operator= (const Orc& orc);
 };
 
