@@ -17,8 +17,11 @@ public:
 	Knight(int health, int strength, std::string name);
 	Knight(int health, int strength, std::string name, Sword sword);
 
+	std::string getName();
+
 	void addVictory();
 	void healing();
+	std::string getStatus();
 	
 	Knight& operator= (const Knight& knight);
 
