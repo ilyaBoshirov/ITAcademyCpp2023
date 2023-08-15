@@ -8,6 +8,10 @@ Orc::Orc(std::string name) : Creature(), name(name) {}
 
 Orc::Orc(int health, int strength, std::string name) : Creature(health, strength), name(name) {}
 
+std::string Orc::getName() {
+	return this->name;
+}
+
 Orc& Orc::operator= (const Orc& orc) {
 	if (this == &orc) {
 		return *this;
