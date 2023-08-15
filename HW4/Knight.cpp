@@ -12,6 +12,10 @@ Knight::Knight(int health, int strength, std::string name) : Creature(health, st
 
 Knight::Knight(int health, int strength, std::string name, Sword sword) : Creature(health, strength), sword(sword), name(name), killedEnemyCounter{ 0 } {};
 
+std::string Knight::getName() {
+	return this->name;
+}
+
 int Knight::makeDamage() {
 	return this->getStrength() + this->sword.getDamage();
 }
@@ -25,6 +29,10 @@ void Knight::addVictory() {
 
 void Knight::healing() {
 	this->currentHealth = this->initHealth;
+}
+
+std::string Knight::getStatus() {
+	return (this->name + ". HP: " + std::to_string(this->currentHealth) + ", damage: " + std::to_string(this->makeDamage()) + ".");
 }
 
 Knight& Knight::operator= (const Knight& knight) {
