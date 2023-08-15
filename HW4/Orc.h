@@ -11,6 +11,8 @@ public:
 	Orc(std::string name);
 	Orc(int health, int strength, std::string name);
 
+	std::string getName();
+
 	Orc& operator= (const Orc& orc);
 };
 
