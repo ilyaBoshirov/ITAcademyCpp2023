@@ -1,9 +1,13 @@
 #include "Creature.h"
+#include <ctime>
+#include <random>
 
 Creature::Creature() {
-	this->initHealth = 100;
+	srand(time(NULL));
+
+	this->initHealth = rand() % 41 + 80;
 	this->currentHealth = this->initHealth;
-	this->strength = 5;
+	this->strength = rand() % 11 + 5;
 }
 
 Creature::Creature(int health, int strength) {
