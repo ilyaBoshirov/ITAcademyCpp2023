@@ -10,7 +10,7 @@ Knight::Knight(std::string name) : Creature(), sword(), name(name), killedEnemyC
 
 Knight::Knight(int health, int strength, std::string name) : Creature(health, strength), sword(), name(name), killedEnemyCounter{ 0 } {};
 
-Knight::Knight(int health, int strength, std::string name, Sword sword) : Creature(health, strength), sword(sword), name(name), killedEnemyCounter{ 0 } {};
+Knight::Knight(int health, int strength, std::string name, const Sword& sword) : Creature(health, strength), sword(sword), name(name), killedEnemyCounter{ 0 } {};
 
 std::string Knight::getName() {
 	return this->name;
@@ -22,7 +22,7 @@ int Knight::makeDamage() {
 
 void Knight::addVictory() {
 	this->killedEnemyCounter += 1;
-	if (killedEnemyCounter % 3 == 0) {
+	if (killedEnemyCounter % LEVEL_UP_NUMBER == 0) {
 		this->sword.update();
 	}
 }
