@@ -24,6 +24,10 @@ int Creature::getStrength() {
 	return this->strength;
 }
 
+void Creature::setStrength(int strength) {
+	this->strength = strength;
+}
+
 int Creature::makeDamage() {
 	return this->strength;
 }
