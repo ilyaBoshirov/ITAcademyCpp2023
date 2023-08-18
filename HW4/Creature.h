@@ -1,4 +1,5 @@
 #pragma once
+
 class Creature {
 
 protected:
@@ -12,7 +13,6 @@ public:
 	Creature(int health, int strength);
 
 	int getHealth();
-	void setHealth(int health);
 	int getStrength();
 	void setStrength(int strength);
 
