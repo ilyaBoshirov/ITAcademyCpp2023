@@ -11,12 +11,15 @@ Stone::Stone(int weight): GameObject("stone") {
 	this->weight = weight;
 }
 
-Stone::Stone(int posotionX, int posotionY) : GameObject("stone", positionX, positionY) {
+Stone::Stone(int posotionX, int posotionY) : GameObject("stone", posotionX, posotionY) {
 	srand(time(NULL));
-	this->weight = rand() % 11 + 5;
+	
+	this->weight = rand() % 11 + 5; 
+	this->positionX = positionX;
+	this->positionY = positionY;
 }
 
-Stone::Stone(int posotionX, int posotionY, int weight) : GameObject("stone", positionX, positionY) {
+Stone::Stone(int posotionX, int posotionY, int weight) : GameObject("stone", posotionX, posotionY) {
 	this->weight = weight;
 }
 

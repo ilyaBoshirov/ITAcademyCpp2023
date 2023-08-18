@@ -5,6 +5,7 @@
 #include <fstream>
 #include <list>
 #include <sstream>
+#include <set>
 
 FileRobotConfigurationLoader::FileRobotConfigurationLoader() {
 	this->configFileName = defaultConfigurationFileName;
@@ -60,8 +61,6 @@ void FileRobotConfigurationLoader::loadConfiguration() {
 			continue;
 		}
 	}
-
-	// add save config in class
 }
 
 CONF FileRobotConfigurationLoader::getConfiguration() {
