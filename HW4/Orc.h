@@ -15,4 +15,3 @@ public:
 
 	Orc& operator= (const Orc& orc);
 };
-
