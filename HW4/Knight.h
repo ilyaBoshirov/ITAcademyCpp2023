@@ -5,6 +5,8 @@
 #include "Creature.h"
 #include "Sword.h"
 
+constexpr auto LEVEL_UP_NUMBER = 2;
+
 class Knight : public Creature {
 	std::string name;
 	Sword sword;
@@ -15,7 +17,7 @@ public:
 	Knight();
 	Knight(std::string name);
 	Knight(int health, int strength, std::string name);
-	Knight(int health, int strength, std::string name, Sword sword);
+	Knight(int health, int strength, std::string name, const Sword& sword);
 
 	std::string getName();
 
