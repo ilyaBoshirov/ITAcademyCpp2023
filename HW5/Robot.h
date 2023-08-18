@@ -5,6 +5,7 @@
 
 #include "GameObject.h"
 #include "Stone.h"
+#include "RobotConfigurationLoader.h"
 
 constexpr auto defaultLoadCapacity = 100;
 constexpr auto defaultRobotName = "WALL-E";
@@ -17,17 +18,16 @@ class Robot: public GameObject {
 	
 public:
 	Robot();
+	Robot(CONF& robotConfiguration);
 	Robot(std::string name);
 	Robot(std::string name, int loadCapacity);
 	Robot(std::string name, int posotionX, int posotionY);
 	Robot(int loadCapacity, int posotionX, int posotionY);
 	Robot(std::string name, int loadCapacity, int posotionX, int posotionY);
 
-	void setName();
-	void setLoadCapacity();
-	void setPositionX();
-	void setPositionY();
-
+	void setName(std::string name);
+	void setLoadCapacity(int loadCapacity);
+	
 	void moveLeft();
 	void moveRight();
 	void moveUp();
@@ -37,4 +37,3 @@ public:
 
 	Robot& operator= (const Robot& robot);
 };
-
