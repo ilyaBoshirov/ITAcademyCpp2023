@@ -90,7 +90,7 @@ int fightWithOrc(Knight& knight, Orc& orc, bool isBoss) {
 
 }
 
-void playGame(Knight knight, Orc boss) {
+void playGame(Knight& knight, Orc& boss) {
 	printIntroduction(knight.getName(), boss.getName());
 	system("pause");
 
@@ -158,10 +158,3 @@ int main() {
 	startGame();
 	return 0;
 }
-
-
-
-
-
-
-
