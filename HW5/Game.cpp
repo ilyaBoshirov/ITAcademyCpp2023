@@ -89,9 +89,17 @@ void Game::rebuild() {
 
 void Game::startGame() {
     srand(time(NULL));
-    auto stoneNumber = rand() % 11 + 5;
 
-    this->addStonesToFiled(stoneNumber);
+    auto fieldArea = this->fieldHeight * fieldWidth;
+
+    int minStonesNumber = fieldArea * 0.05;
+    int maxStonesNumber = fieldArea * 0.1;
+
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(minStonesNumber, maxStonesNumber);
+
+    this->addStonesToFiled(dist(gen));
     
     system("cls");
     this->gameIsRunning = true;
