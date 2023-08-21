@@ -1,11 +1,12 @@
 #pragma once
 
-#include <string>
 #include <stack>
+#include <string>
 
 #include "GameObject.h"
-#include "Stone.h"
 #include "RobotConfigurationLoader.h"
+#include "Stone.h"
+
 
 constexpr auto defaultLoadCapacity = 10000;
 constexpr auto defaultRobotName = "WALL-E";
