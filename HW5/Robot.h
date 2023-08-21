@@ -7,7 +7,7 @@
 #include "Stone.h"
 #include "RobotConfigurationLoader.h"
 
-constexpr auto defaultLoadCapacity = 100;
+constexpr auto defaultLoadCapacity = 10000;
 constexpr auto defaultRobotName = "WALL-E";
 
 class Robot: public GameObject {
