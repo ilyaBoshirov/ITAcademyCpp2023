@@ -1,4 +1,5 @@
 #include "CLIRobotConfigurationLoader.h"
+
 #include <iostream>
 #include <string>
 
