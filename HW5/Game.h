@@ -1,7 +1,9 @@
 #pragma once
-#include <vector>
+
 #include "Robot.h"
 #include "Stone.h"
+
+#include <vector>
 
 constexpr uint8_t robotValue = 1;
 constexpr uint8_t stoneValue = 2;
