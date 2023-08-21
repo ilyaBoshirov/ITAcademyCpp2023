@@ -1,15 +1,15 @@
 #include <algorithm>
-#include <string>
-#include <iostream>
-#include <thread>
-#include <fstream>
-
-#include <Windows.h>
-#include <stdio.h>
 #include <conio.h>
-#include "Game.h"
+#include <fstream>
+#include <iostream>
+#include <stdio.h>
+#include <string>
+#include <thread>
+#include <Windows.h>
+
 #include "CLIRobotConfigurationLoader.h"
 #include "FileRobotConfigurationLoader.h"
+#include "Game.h"
 
 
 Robot initRobot(std::pair<int, int> gameFieldSize) {
