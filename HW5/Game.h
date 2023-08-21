@@ -25,17 +25,21 @@ public:
 
 	bool getIsRunning();
 	void setIsRunning(bool isRunning);
+	void setRobot(const Robot& robot);
+	void setFieldWidth(int fieldWidth);
+	void setFieldHeight(int fieldHeight);
+	std::pair<int, int> getFieldSize();
+	void rebuild();
 
 	int getStoneIndexByPosition(std::pair<int, int> position);
 	void createDefaultFiled();
 	void createFiled(int fieldWidth, int fieldHeight);
 	void startGame();
-	void showRules();
-	void showMenu();
 	void keypressListener();
 	void clearField();
 	void addStonesToFiled(int stonesNumber);
 	std::pair<int, int> getConsoleSize();
 
+	Game& operator= (const Game& game);
 };
 

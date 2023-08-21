@@ -14,11 +14,6 @@ Game::Game() {
 
     this->robot = Robot{};
     this->filed[this->robot.getPositionX()][this->robot.getPositionY()] = robotValue;
-
-    srand(time(NULL));
-    auto stoneNumber = rand() % 11 + 5;
-
-    this->addStonesToFiled(stoneNumber);
 }
 
 Game::Game(Robot robot) {
@@ -27,11 +22,6 @@ Game::Game(Robot robot) {
 
     this->robot = robot;
     this->filed[this->robot.getPositionX()][this->robot.getPositionY()] = robotValue;
-
-    srand(time(NULL));
-    auto stoneNumber = rand() % 11 + 5;
-
-    this->addStonesToFiled(stoneNumber);
 }
 
 Game::Game(int fieldWidth, int fieldHeight) {
@@ -40,11 +30,6 @@ Game::Game(int fieldWidth, int fieldHeight) {
 
     this->robot = Robot{};
     this->filed[this->robot.getPositionX()][this->robot.getPositionY()] = robotValue;
-
-    srand(time(NULL));
-    auto stoneNumber = rand() % 11 + 5;
-
-    this->addStonesToFiled(stoneNumber);
 }
 
 Game::Game(int fieldWidth, int fieldHeight, Robot robot) {
@@ -53,11 +38,6 @@ Game::Game(int fieldWidth, int fieldHeight, Robot robot) {
 
     this->robot = robot;
     this->filed[this->robot.getPositionX()][this->robot.getPositionY()] = robotValue;
-
-    srand(time(NULL));
-    auto stoneNumber = rand() % 11 + 5;
-
-    this->addStonesToFiled(stoneNumber);
 }
 
 Game::~Game() {
@@ -76,8 +56,42 @@ void Game::setIsRunning(bool isRunning) {
     this->gameIsRunning = isRunning;
 }
 
+void Game::setRobot(const Robot& robot) {
+    this->filed[this->robot.getPositionX()][this->robot.getPositionY()] = 0;
+    
+    this->robot = robot;
+    this->filed[this->robot.getPositionX()][this->robot.getPositionY()] = robotValue;
+}
+
+void Game::setFieldWidth(int fieldWidth) {
+    this->fieldWidth = fieldWidth;
+}
+
+void Game::setFieldHeight(int fieldHeight) {
+    this->fieldHeight = fieldHeight;
+}
+
+std::pair<int, int> Game::getFieldSize() {
+    return std::make_pair(this->fieldWidth, this->fieldHeight);
+}
+
+void Game::rebuild() {
+    for (auto i = 0; i < this->fieldHeight; ++i) {
+        delete[] this->filed[i];
+    }
+
+    delete[] this->filed;
+
+    this->createFiled(this->fieldWidth, this->fieldHeight);
+    this->clearField();
+}
+
 void Game::startGame() {
-    // todo
+    srand(time(NULL));
+    auto stoneNumber = rand() % 11 + 5;
+
+    this->addStonesToFiled(stoneNumber);
+    
     system("cls");
     this->gameIsRunning = true;
 }
@@ -180,6 +194,12 @@ void Game::keypressListener() {
             std::cout << "EXIT..." << std::endl;
             this->gameIsRunning = false;
         }
+
+        if (this->stones.size() == 0) {
+            system("cls");
+            std::cout << "YOU WIN!!!" << std::endl;
+            this->gameIsRunning = false;
+        }
     }
 }
 
@@ -194,14 +214,6 @@ int Game::getStoneIndexByPosition(std::pair<int,int> position) {
     }
 
     return stoneIndex;
-}
-
-void Game::showMenu() {
-    
-}
-
-void Game::showRules() {
-
 }
 
 void Game::createFiled(int fieldWidth, int fieldHeight) {
@@ -250,8 +262,8 @@ std::pair<int, int> Game::getConsoleSize() {
     if (hWndConsole = GetStdHandle(STD_OUTPUT_HANDLE)) {
         CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
         if (GetConsoleScreenBufferInfo(hWndConsole, &consoleInfo)) {
-            width = consoleInfo.srWindow.Right - consoleInfo.srWindow.Left + 1;
-            height = consoleInfo.srWindow.Bottom - consoleInfo.srWindow.Top + 1;
+            width = consoleInfo.srWindow.Right - consoleInfo.srWindow.Left;
+            height = consoleInfo.srWindow.Bottom - consoleInfo.srWindow.Top - 2;
 
         }
         else {
@@ -263,4 +275,26 @@ std::pair<int, int> Game::getConsoleSize() {
     }
 
     return std::make_pair(width, height);
+}
+
+Game& Game::operator= (const Game& game) {
+    if (this == &game) {
+        return *this;
+    }
+
+    this->fieldWidth = game.fieldWidth;
+    this->fieldHeight = game.fieldHeight;
+    this->robot = game.robot;
+    this->stones = game.stones;
+    this->gameIsRunning = game.gameIsRunning;
+
+    this->createFiled(game.fieldWidth, game.fieldHeight);
+
+    for (auto i = 0; i < this->fieldHeight; ++i) {
+        for (auto j = 0; j < this->fieldWidth; ++j) {
+            this->filed[i][j] = game.filed[i][j];
+        }
+    }
+
+    return *this;
 }
