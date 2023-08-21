@@ -14,15 +14,15 @@ void CLIRobotConfigurationLoader::loadConfiguration() {
 	std::cout << "Position X: ";
 	int tempValue;
 	std::cin >> tempValue;
-	this->configuration["positionX"] = tempValue;
+	this->configuration["positionX"] = std::to_string(tempValue);
 
 	std::cout << "Position Y: ";
 	std::cin >> tempValue;
-	this->configuration["positionY"] = tempValue;
+	this->configuration["positionY"] = std::to_string(tempValue);
 
 	std::cout << "Load Capacity: ";
 	std::cin >> tempValue;
-	this->configuration["loadCapacity"] = tempValue;
+	this->configuration["loadCapacity"] = std::to_string(tempValue);
 }
 
 CONF CLIRobotConfigurationLoader::getConfiguration() {
