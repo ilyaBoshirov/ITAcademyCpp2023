@@ -1,0 +1,4 @@
+Name: c3po
+PositionX: 12
+PositionY: 11
+LoadCapacity: 1000
