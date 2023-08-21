@@ -12,6 +12,10 @@
 #include "Game.h"
 
 
+constexpr auto minFieldWidth = 10;
+constexpr auto minFieldHeight = 10;
+
+
 Robot initRobot(std::pair<int, int> gameFieldSize) {
     std::cout << "Select robot initialization type:" << std::endl;
     std::cout << "1 - CLI" << std::endl;
@@ -91,6 +95,9 @@ void showMenu() {
 void showRules() {
     system("cls");
     std::cout << "Your goal is to clear the field of debris(stones)." << std::endl;
+    std::cout << "# --- ROBOT." << std::endl;
+    std::cout << "* --- STONE." << std::endl;
+    std::cout << "Your goal is to clear the field of debris(stones)." << std::endl;
     std::cout << "Robot control:" << std::endl;
     std::cout << "w - UP" << std::endl;
     std::cout << "s - DOWN" << std::endl;
@@ -131,7 +138,7 @@ void initGame(Game& game) {
         std::cout << "Field width: ";
         std::cin >> width;
 
-        if (width < 0 || width > (consoleSize.first - 2)) {
+        if (width < minFieldWidth || width > (consoleSize.first - 2)) {
             std::cout << "Wrong value of width. It must be in range [0, " << consoleSize.first - 2 << "]." << std::endl;
         }
         else {
@@ -144,7 +151,7 @@ void initGame(Game& game) {
         std::cout << "Field height: ";
         std::cin >> height;
 
-        if (height < 0 || height >(consoleSize.second - 3)) {
+        if (height < minFieldHeight || height >(consoleSize.second - 3)) {
             std::cout << "Wrong value of height. It must be in range [0, " << consoleSize.second - 3 << "]." << std::endl;
         }
         else {
