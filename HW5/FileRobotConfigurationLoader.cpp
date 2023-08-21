@@ -37,27 +37,28 @@ void FileRobotConfigurationLoader::loadConfiguration() {
 
 	if (!fin) {
 		std::cout << "Can't open file " << this->configFileName << std::endl;
+		std::cout << "Use default parameters " << std::endl;
+		return;
 	}
 
 	std::string line;
 
-	while (!fin.eof()) {
-		fin >> line;
+	while (std::getline(fin, line)) {
 		toLowerCase(line);
 		if (line.find("name") != std::string::npos) {
 			this->configuration["name"] = splitLine(line).back();
 			continue;
 		}
-		if (line.find("position x") != std::string::npos) {
-			this->configuration["positionX"] = std::stoi(splitLine(line).back());
+		if (line.find("positionx") != std::string::npos) {
+			this->configuration["positionX"] = splitLine(line).back();
 			continue;
 		}
-		if (line.find("position y") != std::string::npos) {
-			this->configuration["positionY"] = std::stoi(splitLine(line).back());
+		if (line.find("positiony") != std::string::npos) {
+			this->configuration["positionY"] = splitLine(line).back();
 			continue;
 		}
-		if (line.find("load capacity") != std::string::npos) {
-			this->configuration["loadCapacity"] = std::stoi(splitLine(line).back());
+		if (line.find("loadcapacity") != std::string::npos) {
+			this->configuration["loadCapacity"] = splitLine(line).back();
 			continue;
 		}
 	}
