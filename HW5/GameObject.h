@@ -16,6 +16,10 @@ public:
 
 	int getPositionX();
 	int getPositionY();
+
+	void setPositionX(int positionX);
+	void setPositionY(int positionY);
+
 	std::pair<int, int> getPosition();
 };
 

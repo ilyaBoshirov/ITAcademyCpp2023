@@ -26,6 +26,14 @@ int GameObject::getPositionY() {
 	return this->positionY;
 }
 
+void GameObject::setPositionX(int positionX) {
+	this->positionX = positionX;
+}
+
+void GameObject::setPositionY(int positionY) {
+	this->positionY = positionY;
+}
+
 std::pair<int, int> GameObject::getPosition() {
 	return std::make_pair(this->positionX, this->positionY);
 }
