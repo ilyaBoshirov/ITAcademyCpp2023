@@ -1,11 +1,12 @@
 #include "Game.h"
-#include <iostream>
-#include <stdio.h>
-#include <Windows.h>
-#include <ctime>
-#include <random>
+
 #include <conio.h>
+#include <ctime>
+#include <iostream>
+#include <random>
+#include <stdio.h>
 #include <vector>
+#include <Windows.h>
 
 
 Game::Game() {
