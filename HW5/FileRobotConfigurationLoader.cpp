@@ -1,11 +1,12 @@
 #include "FileRobotConfigurationLoader.h"
 
 #include <algorithm>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <list>
-#include <sstream>
 #include <set>
+#include <sstream>
+
 
 FileRobotConfigurationLoader::FileRobotConfigurationLoader() {
 	this->configFileName = defaultConfigurationFileName;
