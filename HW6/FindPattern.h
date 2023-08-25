@@ -18,7 +18,6 @@ struct Contains : public std::binary_function<std::string, std::string, bool>
 };
 
 
-
 auto getNumberOfMatches{ [](std::vector<std::string> lines, std::string pattern) {
 	return std::count_if(lines.begin(), lines.end(), std::bind2nd(Contains(), pattern));
 	}
