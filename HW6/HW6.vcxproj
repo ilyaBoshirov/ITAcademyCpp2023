@@ -140,9 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="HW6.cpp" />
+    <ClCompile Include="VectorAnalyzer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FindPattern.h" />
+    <ClInclude Include="VectorAnalyzer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
