@@ -141,12 +141,18 @@
   <ItemGroup>
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="HW6.cpp" />
+    <ClCompile Include="Mathematics.cpp" />
+    <ClCompile Include="MyException.cpp" />
     <ClCompile Include="VectorAnalyzer.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FindPattern.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="Mathematics.h" />
+    <ClInclude Include="MyException.h" />
     <ClInclude Include="VectorAnalyzer.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

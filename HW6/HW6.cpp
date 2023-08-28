@@ -7,6 +7,8 @@
 
 #include "FindPattern.h"
 #include "VectorAnalyzer.h"
+#include "Mathematics.h"
+#include "MyException.h"
 
 constexpr auto task1VectorDataFileName = "task1_vector_data.txt";
 
@@ -82,10 +84,73 @@ void task3() {
 	std::cout << "*********** TASK 3 ***********" << std::endl;
 }
 
+void task4() {
+	std::cout << "*********** TASK 4 ***********" << std::endl;
+	Mathematics math{};
+
+	std::cout << "Enter integer for calculating hyperbolic cotangent ";
+	auto value{ 0 };
+	std::cin >> value;
+	std::cout << std::endl;
+
+	try {
+		std:: cout << "Result: " << math.hyperbolicCotangent(value) << std::endl;
+	}
+	catch (MyException& ex) {
+		std::cout << "ERROR: " << ex.what() << std::endl;
+	}
+	catch (std::exception& ex) {
+		std::cout << "ERROR: " << ex.what() << std::endl;
+	}
+	catch (...) {
+		std::cout << "Something get wrong" << std::endl;
+	}
+
+	std::cout << "Enter integer for calculating factorial ";
+	std::cin >> value;
+	std::cout << std::endl;
+
+	try {
+		std::cout << "Result: " << math.factorial(value) << std::endl;
+	}
+	catch (MyException& ex) {
+		std::cout << "ERROR: " << ex.what() << std::endl;
+	}
+	catch (std::exception& ex) {
+		std::cout << "ERROR: " << ex.what() << std::endl;
+	}
+	catch (...) {
+		std::cout << "Something get wrong" << std::endl;
+	}
+
+	std::cout << "Enter n and m for calculating binomial coefficient ";
+	auto m{ 0 };
+	std::cin >> value >> m;
+	std::cout << std::endl;
+
+	try {
+		std::cout << "Result: " << math.binomialCoefficient(value, m) << std::endl;
+	}
+	catch (MyException& ex) {
+		std::cout << "ERROR: " << ex.what() << std::endl;
+	}
+	catch (std::exception& ex) {
+		std::cout << "ERROR: " << ex.what() << std::endl;
+	}
+	catch (...) {
+		std::cout << "Something get wrong" << std::endl;
+	}
+}
+
+
 int main() {
 	// task1();
 	// task2();
+
+	// todo task 3 
 	task3();
+
+	//task4();	
 
 	return 0;
 }
