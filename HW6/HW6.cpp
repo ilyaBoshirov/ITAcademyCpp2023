@@ -184,13 +184,13 @@ void task4() {
 
 
 int main() {
-	// task1();
-	// task2();
+	task1();
 
-	// todo task 3 
+	task2();
+
 	task3();
 
-	//task4();	
+	task4();	
 
 	return 0;
 }
