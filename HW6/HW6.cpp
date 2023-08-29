@@ -9,6 +9,9 @@
 #include "VectorAnalyzer.h"
 #include "Mathematics.h"
 #include "MyException.h"
+#include "Target.h"
+#include "AutoAttack.h"
+
 
 constexpr auto task1VectorDataFileName = "task1_vector_data.txt";
 
@@ -82,6 +85,43 @@ void task2() {
 
 void task3() {
 	std::cout << "*********** TASK 3 ***********" << std::endl;
+
+	AutoAttack autoAttack{};
+	Target target{};
+	
+	target.status();
+
+	autoAttack.addEffect([](Target& target) {
+			target.doDamage(208);
+		});
+
+	autoAttack.addEffect([](Target& target) {
+			target.setDebuf("poison");
+			target.setDebuf("fire!");
+		});
+
+	autoAttack.addEffect([](Target& target) {
+			target.setDebuf("fatality!");
+		});
+
+	autoAttack.attack(target);
+	target.status();
+
+	std::cout << "Remove last effect (fatality)" << std::endl;
+	autoAttack.removeEffect();
+	autoAttack.attack(target);
+	target.status();
+
+	autoAttack.addEffect([](Target& target) {
+		target.setDebuf("fatality!");
+		});
+
+	std::cout << "Remove 2nd effect (by id)" << std::endl;
+	autoAttack.removeEffect(1);
+	autoAttack.attack(target);
+	target.status();
+
+	target.clear();
 }
 
 void task4() {
