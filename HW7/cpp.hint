@@ -1,0 +1,2 @@
+#define PRIMETESTS_API __declspec(dllexport)
+#define PRIMETESTS_API __declspec(dllimport)
