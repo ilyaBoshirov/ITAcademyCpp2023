@@ -26,7 +26,7 @@ bool CPrimeTests::divisorIterationTest(uint64_t number)
 	uint64_t root = sqrt(number);
 	for (uint64_t i = 2; i <= root; i++) {
 
-		if ((uint64_t)(number % root) == 0) {
+		if ((uint64_t)(number % i) == 0) {
 			return false;
 		}
 	}
@@ -37,13 +37,12 @@ bool CPrimeTests::pFarmTest(uint64_t number, uint64_t accuracy) {
 	std::uniform_int_distribution<> die( 2, number );
 
 	std::vector<uint64_t> values{};
-	values.resize(10);
 	uint64_t temp{};
 
 	while (values.size() < accuracy) {
 		temp = die(this->mersenne);
 
-		if (this->gcd(number, accuracy) != 1) {
+		if (this->gcd(number, temp) != 1) {
 			continue;
 		}
 		values.push_back(temp);
