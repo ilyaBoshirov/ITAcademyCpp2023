@@ -34,6 +34,11 @@ bool CPrimeTests::divisorIterationTest(uint64_t number)
 }
 
 bool CPrimeTests::pFarmTest(uint64_t number, uint64_t accuracy) {
+	/*
+	
+	accuracy - precision to reduce the chance of error
+	
+	*/
 	std::uniform_int_distribution<> die( 2, number );
 
 	std::vector<uint64_t> values{};
@@ -60,6 +65,12 @@ bool CPrimeTests::pFarmTest(uint64_t number, uint64_t accuracy) {
 }
 
 bool CPrimeTests::pMillerRabinTest(uint64_t number, uint64_t accuracy) {
+	/*
+
+	accuracy - precision to reduce the chance of error
+
+	*/
+
 	if (number == 2 || number == 3) {
 		return true;
 	}
@@ -114,6 +125,11 @@ uint64_t CPrimeTests::gcd(uint64_t a, uint64_t b) {
 }
 
 uint64_t CPrimeTests::fastModulePow(uint64_t base, uint64_t degree, uint64_t mod) {
+	/*
+	
+	result = base ^ degree mod (mod)
+
+	*/
 	uint64_t result{ 1 };
 	uint64_t temp{ base };
 
