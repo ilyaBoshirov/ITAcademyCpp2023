@@ -44,3 +44,10 @@ void LFSR::rotate() {
 void LFSR::reset() {
 	this->state = this->initState;
 }
+
+uint16_t LFSR::round() {
+	auto bit = getBit();
+	this->rotate();
+
+	return bit;
+}
