@@ -18,6 +18,7 @@ public:
 	void setState(uint16_t state);
 
 	uint16_t getBit();
+	uint16_t round();
 	void init();
 	void rotate();
 	void reset();
