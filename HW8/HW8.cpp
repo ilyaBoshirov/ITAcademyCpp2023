@@ -1,111 +1,41 @@
 #include <iostream>
-#include <vector>
-#include <thread>
-#include <atomic>
-#include <mutex>
-#include <string>
 #include <regex>
-#include <chrono>
-#include <iomanip>
+#include <string>
+#include <Windows.h>
 
+#include "Bruter.h"
 #include "LFSR.h"
 
+constexpr size_t minUserSequenceLength = 7;
 
-std::mutex stateMutex;
-std::mutex addSolutionMutex;
-std::mutex completeAdd;
-
-std::vector<bool> isComplete{};
-
-struct Answer {
-
-private:
-	uint32_t candidate{ 0x1 };
-	std::unique_ptr<std::vector<LFSRSTATE>> solution = std::make_unique<std::vector<LFSRSTATE>>();
-
-public:
-	void addSolution(LFSRSTATE answ) {
-		solution.get()->push_back(answ);
-	}
-
-	std::vector<LFSRSTATE> getSolutions() {
-		return *solution.get();
-	}
-
-	uint32_t getSolutionsLength() {
-		return solution.get()->size();
-	}
-
-	uint32_t getCandidate() {
-		return candidate;
-	}
-
-	void incCandidate() {
-		++candidate;
-	}
-};
-
-void bruteFunction(Answer* answerStruct, const std::string& desiredSequence) {
-	LFSR lfsr{};
-
-	stateMutex.lock();
-
-	auto state = answerStruct->getCandidate();
-	answerStruct->incCandidate();
-
-	stateMutex.unlock();
-
-	auto seqLength = desiredSequence.length();
-
-	while (state <= 0xffff) {
-
-		lfsr.setState(state & 0xffff);
-		lfsr.init();
-
-		std::string generatedSequence{ "" };
-		for (auto i{ 0 }; i < seqLength; ++i) {
-			generatedSequence += std::to_string( lfsr.round() );
+size_t getConsoleWidth() {
+	auto width{ 0 };
+	HANDLE hWndConsole;
+	if (hWndConsole = GetStdHandle(STD_OUTPUT_HANDLE)) {
+		CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+		if (GetConsoleScreenBufferInfo(hWndConsole, &consoleInfo)) {
+			width = consoleInfo.srWindow.Right - consoleInfo.srWindow.Left + 1;
 		}
-
-		if (generatedSequence == desiredSequence) {
-			addSolutionMutex.lock();
-
-			answerStruct->addSolution(state);
-
-			addSolutionMutex.unlock();
+		else {
+			std::cout << "Error: " << GetLastError() << std::endl;
 		}
-
-		// get next state
-
-		stateMutex.lock();
-
-		state = answerStruct->getCandidate();
-		answerStruct->incCandidate();
-
-		stateMutex.unlock();
+	}
+	else {
+		std::cout << "Error: " << GetLastError() << std::endl;
 	}
 
-	completeAdd.lock();
-
-	isComplete.push_back(true);
-
-	completeAdd.unlock();
+	return width;
 }
 
-size_t runBruteforce(Answer& answerStruct, const std::string& desiredSequence) {
-
-	size_t threadNumber{0};
-
-	std::cout << "Enter thread number: " << std::endl;
-	std::cin >> threadNumber;
-	std::cout << std::endl;
-	
-	for (auto i{ 0 }; i < threadNumber; ++i) {
-		std::thread bruter(bruteFunction, &answerStruct, desiredSequence);
-		bruter.detach();
-	}
-
-	return threadNumber;
+void helloMsg() {
+	std::cout << std::string(getConsoleWidth(), '=') << std::endl;
+	std::cout << "Welcome to LFSR bruter!" << std::endl;
+	std::cout << "LFSR - linear feedback shift register. It is type of stream ciphers" << std::endl;
+	std::cout << "The feedback of this cipher is calculated by the formula:" << std::endl << std::endl;
+	std::cout << "x^16 + x^15 + x^13 + x^4 + 1" << std::endl << std::endl;
+	std::cout << "This polynomial is primitive, which provides the period of the generated gamma equal to 2^16" << std::endl;
+	std::cout << "You can enter some gamma and the program, using parallelized enumeration, will find the filling of the register, which will result in the desired sequence of bits" << std::endl;
+	std::cout << std::string(getConsoleWidth(), '=') << std::endl << std::endl;
 }
 
 void checkSequence(const std::string& sequence, int minLength) {
@@ -122,53 +52,41 @@ void checkSequence(const std::string& sequence, int minLength) {
 		std::cout << "Try another time, bye..." << std::endl;
 		exit(2);
 	}
-	
+
 }
 
-void fllDesiredSequence(std::string& sequence) {
+void fillDesiredSequence(std::string& sequence) {
 	auto minLength = 1;
 	std::cout << "Enter sequence from 0 and 1 to find lfsr state, that generate your sequence (length must be not less than " << minLength << "):" << std::endl;
 	std::cin >> sequence;
 	checkSequence(sequence, minLength);
 }
 
-void endWaiting(size_t threadNumber, Answer& answerStruct) {
-	while (isComplete.size() != threadNumber) {
-		stateMutex.lock();
-		auto state = answerStruct.getCandidate();
-		stateMutex.unlock();
-		std::cout << "\rComplete " << (state * 100 / 0xffff) << "%";
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
-	}
+size_t getThreadNumber() {
+	size_t threadNumber{ 0 };
+
+	std::cout << "Enter thread number: " << std::endl;
+	std::cin >> threadNumber;
+	std::cout << std::endl;
+
+	return threadNumber;
 }
 
-void printResults(Answer& answerStruct) {
-	auto solutionLength = answerStruct.getSolutionsLength();
-	std::cout << std::endl << "Number of find solutions: " << solutionLength << std::endl;
-	
-	if (solutionLength > 0) {
-		std::cout << "SOLUTION LIST:" << std::endl;
-		auto solutions = answerStruct.getSolutions();
+void start() {
+	std::string sequence;
+	fillDesiredSequence(sequence);
+	checkSequence(sequence, minUserSequenceLength);
 
-		std::string indexStr;
-		for (auto i{ 0 }; i < solutionLength; ++i) {
-			std::cout << "[" << std::dec << int(i) << "] ";
-			std::cout << "0x" << std::hex << solutions[i] << std::endl;
-		}
-	}	
+	auto threadNumber = getThreadNumber();
+
+	Bruter bruter{ sequence , threadNumber };
+	bruter.startBruteforce();
+	bruter.endWaiting();
+	bruter.printResults();
 }
 
-int main() {	
-	std::string desiredSequence;
-	fllDesiredSequence(desiredSequence);
-
-	Answer answer{};
-
-	auto threadNumber = runBruteforce(answer, desiredSequence);
-
-	endWaiting(threadNumber, answer);
-
-	printResults(answer);
-
+int main() {
+	helloMsg();
+	start();
 	return 0;
 }
