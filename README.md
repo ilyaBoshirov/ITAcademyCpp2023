@@ -9,4 +9,5 @@
     HW5 - OOP (inheritance, abstract classes, etc)<br>
     HW6 - Lambda expressions, template classes, custom exceptions, std::function<br>
     HW7 - DLL<br>
+    HW8 - Some multithreading<br>
 </p>
