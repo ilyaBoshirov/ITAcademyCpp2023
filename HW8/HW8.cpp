@@ -6,6 +6,7 @@
 #include <string>
 #include <regex>
 #include <chrono>
+#include <iomanip>
 
 #include "LFSR.h"
 
@@ -91,28 +92,20 @@ void bruteFunction(Answer* answerStruct, const std::string& desiredSequence) {
 	completeAdd.unlock();
 }
 
-void runBruteforce(Answer& answerStruct, const std::string& desiredSequence) {
+size_t runBruteforce(Answer& answerStruct, const std::string& desiredSequence) {
 
-	unsigned int threadNumber{0};
+	size_t threadNumber{0};
 
 	std::cout << "Enter thread number: " << std::endl;
 	std::cin >> threadNumber;
+	std::cout << std::endl;
 	
 	for (auto i{ 0 }; i < threadNumber; ++i) {
 		std::thread bruter(bruteFunction, &answerStruct, desiredSequence);
 		bruter.detach();
 	}
 
-	std::cout << std::endl;
-	while (isComplete.size() != threadNumber) {
-		stateMutex.lock();
-		auto state = answerStruct.getCandidate();
-		stateMutex.unlock();
-		std::cout << "\rComplete " << (state * 100 / 0xffff) << "%";
-		std::this_thread::sleep_for(std::chrono::microseconds(10));
-	}
-
-	std::cout << std::endl << "Number of find solutions: " << answerStruct.getSolutionsLength() << std::endl;
+	return threadNumber;
 }
 
 void checkSequence(const std::string& sequence, int minLength) {
@@ -139,13 +132,43 @@ void fllDesiredSequence(std::string& sequence) {
 	checkSequence(sequence, minLength);
 }
 
+void endWaiting(size_t threadNumber, Answer& answerStruct) {
+	while (isComplete.size() != threadNumber) {
+		stateMutex.lock();
+		auto state = answerStruct.getCandidate();
+		stateMutex.unlock();
+		std::cout << "\rComplete " << (state * 100 / 0xffff) << "%";
+		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	}
+}
+
+void printResults(Answer& answerStruct) {
+	auto solutionLength = answerStruct.getSolutionsLength();
+	std::cout << std::endl << "Number of find solutions: " << solutionLength << std::endl;
+	
+	if (solutionLength > 0) {
+		std::cout << "SOLUTION LIST:" << std::endl;
+		auto solutions = answerStruct.getSolutions();
+
+		std::string indexStr;
+		for (auto i{ 0 }; i < solutionLength; ++i) {
+			std::cout << "[" << std::dec << int(i) << "] ";
+			std::cout << "0x" << std::hex << solutions[i] << std::endl;
+		}
+	}	
+}
+
 int main() {	
 	std::string desiredSequence;
 	fllDesiredSequence(desiredSequence);
 
 	Answer answer{};
 
-	runBruteforce(answer, desiredSequence);
+	auto threadNumber = runBruteforce(answer, desiredSequence);
+
+	endWaiting(threadNumber, answer);
+
+	printResults(answer);
 
 	return 0;
 }
