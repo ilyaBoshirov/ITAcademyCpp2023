@@ -140,10 +140,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bruter.cpp" />
     <ClCompile Include="HW8.cpp" />
     <ClCompile Include="LFSR.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bruter.h" />
     <ClInclude Include="LFSR.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
