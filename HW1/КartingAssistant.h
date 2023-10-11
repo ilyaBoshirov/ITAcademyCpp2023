@@ -14,19 +14,19 @@ constexpr auto storageFile = "data.txt";
 constexpr auto fileSeparator = "********************";
 constexpr auto lapsNumber = 5;
 
-void printHelpMessage(std::string programmName);
+void printHelpMessage(const std::string& programmName);
 
 void printMenu();
 
 RACEINFO startNewRace();
 
-void printAllResults(RACEINFO history);
+void printAllResults(const RACEINFO& history);
 
-void printLastResult(RACEINFO history);
+void printLastResult(const RACEINFO& history);
 
 RACEINFO loadResults();
 
-void saveResults(RACEINFO raceInfo);
+void saveResults(const RACEINFO& raceResult);
 
 void clearCmd();
 

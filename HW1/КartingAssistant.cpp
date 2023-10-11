@@ -1,6 +1,6 @@
 ﻿#include "КartingAssistant.h"
 
-void printHelpMessage(std::string programmName) {
+void printHelpMessage(const std::string& programmName) {
 	std::cout << "This is help message for " << programmName << std::endl;
 	std::cout << "Press 1 for start new race. To start stopwotch and fix lap time use SPACE;" << std::endl;
 	std::cout << "Press 2 for printing result of last race;" << std::endl;
@@ -11,7 +11,7 @@ void printHelpMessage(std::string programmName) {
 	std::cout << std::endl;
 }
 
-void printLastResult(RACEINFO history) {
+void printLastResult(const RACEINFO& history) {
 	int numberOfRaces = (history.size() - (history.size() % lapsNumber)) / lapsNumber;
 
 	if (numberOfRaces == 0) {
@@ -20,17 +20,22 @@ void printLastResult(RACEINFO history) {
 	}
 
 	std::cout << "Race #" << numberOfRaces << " result" << std::endl;
+
 	for (auto j = 0; j < lapsNumber; ++j) {
-		std::cout << "Lap " << j + 1 << "; Time: " << history[lapsNumber * (numberOfRaces - 1) + j].first;
-		if (history[lapsNumber * (numberOfRaces - 1) + j].second.length() > 0) {
-			std::cout << " ; Comment: " << history[lapsNumber * (numberOfRaces - 1) + j].second;
+		auto lapIndex = lapsNumber * (numberOfRaces - 1) + j;
+		std::cout << "Lap " << j + 1 << "; Time: " << history[lapIndex].first;
+
+		if (history[lapIndex].second.length() > 0) {
+			std::cout << " ; Comment: " << history[lapIndex].second;
 		}
+
 		std::cout << ";" << std::endl;
 	}
+
 	std::cout << std::endl;
 }
 
-void printAllResults(RACEINFO history) {
+void printAllResults(const RACEINFO& history) {
 	int numberOfRaces = (history.size() - (history.size() % lapsNumber)) / lapsNumber;
 
 	if (numberOfRaces == 0) {
@@ -38,16 +43,21 @@ void printAllResults(RACEINFO history) {
 		return;
 	}
 
-	for (auto i = 0; i < numberOfRaces; ++i) {
+	for (auto i{ 0 }; i < numberOfRaces; ++i) {
 		std::cout << "Race #" << i + 1 << " result" << std::endl;
+
 		for (auto j = 0; j < lapsNumber; ++j) {
-			std::cout << "Lap " << j + 1 << "; Time: " << history[lapsNumber * i + j].first;
-			if (history[lapsNumber * i + j].second.length() > 0) {
-				std::cout << "; Comment:" << history[lapsNumber * i + j].second;
+			auto lapIndex = lapsNumber * i + j;
+			std::cout << "Lap " << j + 1 << "; Time: " << history[lapIndex].first;
+			
+			if (history[lapIndex].second.length() > 0) {
+				std::cout << "; Comment:" << history[lapIndex].second;
 			}
+
 			std::cout << ";" << std::endl;
 		}
 	}
+
 	std::cout << std::endl;
 }
 
@@ -168,14 +178,14 @@ void printMenu() {
 	std::cout << "6 - quit" << std::endl;
 }
 
-void saveResults(RACEINFO raceResult) {
+void saveResults(const RACEINFO& raceResult) {
 	std::ofstream fout(storageFile, std::ios::app);
 	if (!fout) {
 		std::cout << "Error when open file. Please, try again" << std::endl;
 	}
 
 	fout << "********************";
-	for (auto lapInfo : raceResult) {
+	for (const auto& lapInfo : raceResult) {
 		fout << std::endl << lapInfo.first << "\t" << lapInfo.second;
 	}
 	fout << std::endl;
@@ -183,7 +193,7 @@ void saveResults(RACEINFO raceResult) {
 	fout.close();
 }
 
-LAPINFO splitLine(std::string line) {
+LAPINFO splitLine(const std::string& line) {
 	auto tabIndex = line.find('\t');
 	return std::make_pair(line.substr(0, tabIndex), line.substr(tabIndex + 1));
 }
