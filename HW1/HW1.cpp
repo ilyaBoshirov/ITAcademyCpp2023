@@ -1,8 +1,8 @@
 ﻿#include "КartingAssistant.h"
 
 void menu(std::string programmName) {
-    bool exitFlag = false;
-    std::string userChoice;
+    auto exitFlag = false;
+    std::string userChoice{};
 
     RACEINFO history = loadResults();
     RACEINFO currentRasce{};
